@@ -2,10 +2,13 @@
 
 #include "debug.h"
 #include "Game.h"
+#include "Goomba1.h"
 
 #include "Mario.h"
 
 extern CMario* mario;
+extern CGoomba1* goomba1;
+
 extern void Reload();
 
 void CSampleKeyHandler::OnKeyDown(int KeyCode)
@@ -13,6 +16,9 @@ void CSampleKeyHandler::OnKeyDown(int KeyCode)
 	DebugOut(L"[INFO] KeyDown: %d\n", KeyCode);
 	switch (KeyCode)
 	{
+	case DIK_K:
+		goomba1->SetState(GOOMBA1_STATE_WALKING);
+		break;
 	case DIK_DOWN:
 		mario->SetState(MARIO_STATE_SIT);
 		break;
@@ -55,13 +61,18 @@ void CSampleKeyHandler::KeyState(BYTE *states)
 		if (game->IsKeyDown(DIK_A))
 			mario->SetState(MARIO_STATE_RUNNING_RIGHT);
 		else
+			//goomba1->SetState(GOOMBA1_STATE_WALKING);
+
 			mario->SetState(MARIO_STATE_WALKING_RIGHT);
 	}
 	else if (game->IsKeyDown(DIK_LEFT))
 	{
 		if (game->IsKeyDown(DIK_A))
 			mario->SetState(MARIO_STATE_RUNNING_LEFT);
+
 		else
+			//goomba1->SetState(GOOMBA1_STATE_WALKING);
+
 			mario->SetState(MARIO_STATE_WALKING_LEFT);
 	}
 	else

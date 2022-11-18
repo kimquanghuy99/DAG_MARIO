@@ -34,6 +34,8 @@
 #include "Mario.h"
 #include "Brick.h"
 #include "Goomba.h"
+#include "Goomba1.h"
+
 #include "Coin.h"
 #include "Platform.h"
 
@@ -59,7 +61,7 @@
 
 CGame *game;
 CMario *mario;
-
+CGoomba1* goomba1;
 list<LPGAMEOBJECT> objects;
 
 CSampleKeyHandler * keyHandler; 
@@ -307,6 +309,30 @@ void LoadAssetsGoomba()
 	animations->Add(ID_ANI_GOOMBA_DIE, ani);
 
 }
+
+void LoadAssetsGoomba1()
+{
+	CTextures* textures = CTextures::GetInstance();
+	CSprites* sprites = CSprites::GetInstance();
+	CAnimations* animations = CAnimations::GetInstance();
+
+	LPTEXTURE texEnemy = textures->Get(ID_TEX_ENEMY);
+
+	sprites->Add(ID_SPRITE_GOOMBA1_WALK + 1, 4, 13, 22, 30, texEnemy);
+	sprites->Add(ID_SPRITE_GOOMBA1_WALK + 2, 24, 13, 42, 30, texEnemy);
+
+	sprites->Add(ID_SPRITE_GOOMBA1_DIE + 1, 44, 19, 62, 30, texEnemy);
+
+	LPANIMATION ani = new CAnimation(100);
+	ani->Add(ID_SPRITE_GOOMBA1_WALK + 1);
+	ani->Add(ID_SPRITE_GOOMBA1_WALK + 2);
+	animations->Add(ID_ANI_GOOMBA1_WALKING, ani);
+
+	ani = new CAnimation(100);
+	ani->Add(ID_SPRITE_GOOMBA1_DIE + 1);
+	animations->Add(ID_ANI_GOOMBA1_DIE, ani);
+
+}
 void LoadAssetsBrick()
 {
 	CTextures* textures = CTextures::GetInstance();
@@ -368,6 +394,8 @@ void LoadResources()
 
 	LoadAssetsMario();
 	LoadAssetsGoomba();
+	LoadAssetsGoomba1();
+
 	LoadAssetsBrick();
 	LoadAssetsCoin();
 	LoadAssetsOther();
@@ -451,12 +479,14 @@ void Reload()
 	mario = new CMario(MARIO_START_X, MARIO_START_Y);
 	objects.push_back(mario);
 
-	for (int j = 0; j < 4; j++)
+	for (int j = 0; j < 1; j++)
 	{
 		CGoomba* goomba = new CGoomba(GOOMBA_X + j * 60, GROUND_Y - 120.0f);
 		objects.push_back(goomba);
 	}
 
+	goomba1 = new CGoomba1(100 , GROUND_Y - 120.0f);
+	objects.push_back(goomba1);
 	// COINS 
 	for (int i = 0; i < 10; i++)
 	{
