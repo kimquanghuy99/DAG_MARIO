@@ -1,4 +1,5 @@
 #include "Goomba.h"
+#include "Coin.h"
 
 CGoomba::CGoomba(float x, float y):CGameObject(x, y)
 {
@@ -39,10 +40,12 @@ void CGoomba::OnCollisionWith(LPCOLLISIONEVENT e)
 
 	if (e->ny != 0 )
 	{
-		vy = 0;
+		//vx = 0;
+		vy= 0;
 	}
 	else if (e->nx != 0)
 	{
+		//vy = -vy;
 		vx = -vx;
 	}
 }
@@ -65,6 +68,11 @@ void CGoomba::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 
 void CGoomba::Render()
 {
+	/*int aniId = ID_ANI_COIN;
+	if (state == ID_ANI_COIN)
+	{
+		aniId = ID_ANI_COIN;
+	}*/
 	int aniId = ID_ANI_GOOMBA_WALKING;
 	if (state == GOOMBA_STATE_DIE) 
 	{
@@ -89,6 +97,7 @@ void CGoomba::SetState(int state)
 			break;
 		case GOOMBA_STATE_WALKING: 
 			vx = -GOOMBA_WALKING_SPEED;
+			//vy = -GOOMBA_WALKING_SPEED;
 			break;
 	}
 }
