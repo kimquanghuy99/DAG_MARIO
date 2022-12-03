@@ -65,7 +65,7 @@ void CPlatform2::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 void CPlatform2::OnNoCollision(DWORD dt)
 {
 	y += vy * dt;
-	if (y >= 220|| y <= 0)
+	if (y >= 50 || y <= 10)
 	{
 		vy = -vy;
 	}

@@ -34,6 +34,8 @@ void CPortal::RenderBoundingBox()
 
 void CPortal::Render()
 {
+	CAnimations* animations = CAnimations::GetInstance();
+	animations->Get(ID_ANI_PORTAL)->Render(x, y);
 	RenderBoundingBox();
 }
 

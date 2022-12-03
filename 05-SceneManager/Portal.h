@@ -1,7 +1,12 @@
 #pragma once
 
 #include "GameObject.h"
-
+#include "Animation.h"
+#include "Animations.h"
+#define ID_ANI_PORTAL	20000
+#define PORTAL_WIDTH 16
+#define PORTAL_BBOX_WIDTH 16
+#define PORTAL_BBOX_HEIGHT 16
 /*
 	Object that triggers scene switching
 */
