@@ -68,11 +68,6 @@ void CGoomba::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 
 void CGoomba::Render()
 {
-	/*int aniId = ID_ANI_COIN;
-	if (state == ID_ANI_COIN)
-	{
-		aniId = ID_ANI_COIN;
-	}*/
 	int aniId = ID_ANI_GOOMBA_WALKING;
 	if (state == GOOMBA_STATE_DIE) 
 	{

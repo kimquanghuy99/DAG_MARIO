@@ -118,9 +118,9 @@
 
 #define MARIO_SIT_HEIGHT_ADJUST ((MARIO_BIG_BBOX_HEIGHT-MARIO_BIG_SITTING_BBOX_HEIGHT)/2)
 
-#define MARIO_TAIL_BBOX_WIDTH  14
+#define MARIO_TAIL_BBOX_WIDTH  21
 #define MARIO_TAIL_BBOX_HEIGHT 24
-#define MARIO_TAIL_SITTING_BBOX_WIDTH  14
+#define MARIO_TAIL_SITTING_BBOX_WIDTH  21
 #define MARIO_TAIL_SITTING_BBOX_HEIGHT 16
 
 #define MARIO_SMALL_BBOX_WIDTH  13
@@ -145,6 +145,8 @@ class CMario : public CGameObject
 	void OnCollisionWithGoomba(LPCOLLISIONEVENT e);
 	void OnCollisionWithCoin(LPCOLLISIONEVENT e);
 	void OnCollisionWithPortal(LPCOLLISIONEVENT e);
+	void OnCollisionWithKoopa(LPCOLLISIONEVENT e);
+
 
 	int GetAniIdBig();
 	int GetAniIdSmall();
