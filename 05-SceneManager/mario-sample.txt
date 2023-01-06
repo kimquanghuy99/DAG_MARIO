@@ -18,4 +18,4 @@ height	240
 0	textures\mario.png
 10	textures\enemies.png
 20	textures\misc.png
-30	textures\MarioFull.png
+30	textures\Tile1_1.png

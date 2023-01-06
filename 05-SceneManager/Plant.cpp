@@ -61,11 +61,11 @@ void CPlant::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	}
 	vx = 0;
 
-	if (vy > 0 && y > 50) {
-		y = 50; vy = -vy;
+	if (vy > 0 && y > 369) {
+		y = 369; vy = -vy;
 	}
-	if (vy < 0 && y < 25) {
-		y = 25; vy = -vy;
+	if (vy < 0 && y < 369 - 22) {
+		y = 369 - 22; vy = -vy;
 	}
 	CGameObject::Update(dt, coObjects);
 	CCollision::GetInstance()->Process(this, dt, coObjects);

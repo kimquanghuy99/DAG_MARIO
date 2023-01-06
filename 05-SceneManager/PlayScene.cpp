@@ -28,7 +28,7 @@ CPlayScene::CPlayScene(int id, LPCWSTR filePath):
 #define SCENE_SECTION_UNKNOWN -1
 #define SCENE_SECTION_ASSETS	1
 #define SCENE_SECTION_OBJECTS	2
-
+#define SCENE_SECTION_TILEMAP	3
 #define ASSETS_SECTION_UNKNOWN -1
 #define ASSETS_SECTION_SPRITES 1
 #define ASSETS_SECTION_ANIMATIONS 2
@@ -183,7 +183,25 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 
 	objects.push_back(obj);
 }
+void CPlayScene::_ParseSection_TILEMAP(string line)
+{
+	int ID, rowMap, columnMap, columnTile, rowTile, totalTiles;
+	LPCWSTR path = ToLPCWSTR(line);
+	ifstream f;
+	f.open(path);
+	f >> ID >> rowMap >> columnMap >> rowTile >> columnTile >> totalTiles;
+	int** tileMapData = new int* [rowMap];
+	for (int i = 0; i < rowMap; i++)
+	{
+		tileMapData[i] = new int[columnMap];
+		for (int j = 0; j < columnMap; j++)
+			f >> tileMapData[i][j];
+	}
+	f.close();
 
+	map = new CMap(ID, rowMap, columnMap, rowTile, columnTile, totalTiles, tileMapData);
+	map->AddTiles();
+}
 void CPlayScene::LoadAssets(LPCWSTR assetFile)
 {
 	DebugOut(L"[INFO] Start loading assets from : %s \n", assetFile);
@@ -237,6 +255,8 @@ void CPlayScene::Load()
 		if (line[0] == '#') continue;	// skip comment lines	
 		if (line == "[ASSETS]") { section = SCENE_SECTION_ASSETS; continue; };
 		if (line == "[OBJECTS]") { section = SCENE_SECTION_OBJECTS; continue; };
+		if (line == "[TILEMAP]") { section = SCENE_SECTION_TILEMAP; continue; };
+
 		if (line[0] == '[') { section = SCENE_SECTION_UNKNOWN; continue; }	
 
 		//
@@ -246,6 +266,8 @@ void CPlayScene::Load()
 		{ 
 			case SCENE_SECTION_ASSETS: _ParseSection_ASSETS(line); break;
 			case SCENE_SECTION_OBJECTS: _ParseSection_OBJECTS(line); break;
+			case SCENE_SECTION_TILEMAP: _ParseSection_TILEMAP(line); break;
+
 		}
 	}
 
@@ -282,14 +304,17 @@ void CPlayScene::Update(DWORD dt)
 	cy -= game->GetBackBufferHeight() / 2;
 
 	if (cx < 0) cx = 0;
-
-	CGame::GetInstance()->SetCamPos(cx, 0.0f /*cy*/);
+	if (cx + game->GetBackBufferWidth() > map->GetMapWidth()) cx = map->GetMapWidth() - game->GetBackBufferWidth();
+	if (cy < 0) cy = 0;
+	if (cy + game->GetBackBufferHeight() > map->GetMapHeight()) cy = map->GetMapHeight() - game->GetBackBufferHeight();
+	CGame::GetInstance()->SetCamPos(cx, cy);
 
 	PurgeDeletedObjects();
 }
 
 void CPlayScene::Render()
 {
+	map->Render();
 	for (int i = 0; i < objects.size(); i++)
 		objects[i]->Render();
 }
