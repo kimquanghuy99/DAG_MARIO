@@ -11,6 +11,7 @@
 #include "Platform.h"
 #include "Sam5test.h"
 #include "Koopa.h"
+#include "Plant.h"
 
 #include "SampleKeyEventHandler.h"
 
@@ -122,6 +123,7 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 	case OBJECT_TYPE_BRICK: obj = new CBrick(x,y); break;
 	case OBJECT_TYPE_COIN: obj = new CCoin(x, y); break;
 	case OBJECT_TYPE_KOOPA: obj = new CKoopa(x, y); break;
+	case OBJECT_TYPE_PLANT: obj = new CPlant(x, y); break;
 
 	case OBJECT_TYPE_PLATFORM:
 	{
