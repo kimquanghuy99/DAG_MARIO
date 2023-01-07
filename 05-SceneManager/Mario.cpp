@@ -14,6 +14,10 @@
 
 void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 {
+	if (x - 12 < 0)
+	{
+		x = 12;
+	}
 	vy += ay * dt;
 	vx += ax * dt;
 

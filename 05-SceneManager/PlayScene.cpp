@@ -12,7 +12,8 @@
 #include "Sam5test.h"
 #include "Koopa.h"
 #include "Plant.h"
-
+#include "Brick3.h"
+#include "ColoxBox.h"
 #include "SampleKeyEventHandler.h"
 
 using namespace std;
@@ -124,7 +125,20 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 	case OBJECT_TYPE_COIN: obj = new CCoin(x, y); break;
 	case OBJECT_TYPE_KOOPA: obj = new CKoopa(x, y); break;
 	case OBJECT_TYPE_PLANT: obj = new CPlant(x, y); break;
-
+	case OBJECT_TYPE_BRICK3:
+	{
+		int w = atoi(tokens[3].c_str());
+		int h = atoi(tokens[4].c_str());
+		obj = new CBrick3(x, y, w, h);
+		break;
+	}
+	case OBJECT_TYPE_COLOX_BOX:
+	{
+		int w = atoi(tokens[3].c_str());
+		int h = atoi(tokens[4].c_str());
+		obj = new CColoxBox(x, y, w, h);
+		break;
+	}
 	case OBJECT_TYPE_PLATFORM:
 	{
 
@@ -297,11 +311,12 @@ void CPlayScene::Update(DWORD dt)
 
 	// Update camera to follow mario
 	float cx, cy;
-	player->GetPosition(cx, cy);
+	float mario_x, mario_y;
+	player->GetPosition(mario_x, mario_y);
 
 	CGame *game = CGame::GetInstance();
-	cx -= game->GetBackBufferWidth() / 2;
-	cy -= game->GetBackBufferHeight() / 2;
+	cx = mario_x - 12 - game->GetBackBufferWidth() / 2;
+	cy = mario_y - 7 - game->GetBackBufferHeight() / 2;
 
 	if (cx < 0) cx = 0;
 	if (cx + game->GetBackBufferWidth() > map->GetMapWidth()) cx = map->GetMapWidth() - game->GetBackBufferWidth();

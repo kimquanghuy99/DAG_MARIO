@@ -82,7 +82,7 @@ void CPlant::Render()
 
 	CAnimations::GetInstance()->Get(aniId)->Render(x, y);
 
-	RenderBoundingBox();
+	//RenderBoundingBox();
 }
 
 void CPlant::SetState(int state)
